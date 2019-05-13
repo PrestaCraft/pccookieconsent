@@ -1,0 +1,5 @@
+#firstline, #secondline, #thirdline, #fourthline, #fifthline { display: none; }
+.panel { max-width: 1200px; margin: 0 auto; }
+.panel-version-checker { max-width: 340px !important; margin: 0 auto; }
+#module_form .panel { max-width: 750px !important; margin: 0 auto; }
+#content, #main { background-color: rgb(20, 70, 86);  }
