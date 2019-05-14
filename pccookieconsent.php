@@ -382,8 +382,20 @@ class PcCookieConsent extends Module
 
     public function hookHeader()
     {
-        $this->context->controller->addCSS('//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css');
-        $this->context->controller->addJS('//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js');
+        if (PcCookieConsent::getVersion() != "1.6") {
+            $this->context->controller->registerStylesheet(
+                'modules-pccookieconsent-css',
+                'modules/'.$this->name.'/views/css/cookieconsent.min.css'
+            );
+
+            $this->context->controller->registerJavascript(
+                'modules-pccookieconsent-js',
+                'modules/'.$this->name.'/views/js/cookieconsent.min.js'
+            );
+        } else {
+            $this->context->controller->addJS(($this->_path).'/views/js/cookieconsent.min.js');
+            $this->context->controller->addCSS(($this->_path).'/views/css/cookieconsent.min.css', 'all');
+        }
 
         if ((int)Configuration::get("PC_CC_LINK_CUSTOM") > 0) {
             $linkObj = new Link();
@@ -414,5 +426,10 @@ class PcCookieConsent extends Module
         if (Tools::getValue('configure') == $this->name) {
             $this->context->controller->addCSS($this->_path.'views/css/back.css');
         }
+    }
+
+    public static function getVersion()
+    {
+        return Tools::substr(_PS_VERSION_, 0, 3);
     }
 }
